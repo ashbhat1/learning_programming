@@ -1,3 +1,4 @@
 http://docs.python-guide.org/en/latest/dev/virtualenvs/
 https://stackoverflow.com/questions/35344649/reading-input-sound-signal-using-python
-
+https://stackoverflow.com/questions/35970282/what-are-chunks-samples-and-frames-when-using-pyaudio
+https://people.csail.mit.edu/hubert/pyaudio/
