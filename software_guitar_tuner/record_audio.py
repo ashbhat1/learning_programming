@@ -45,7 +45,6 @@ def record_audio(outfname):
 
     print("* done recording")
 
-    #data = np.fromstring(strdata,dtype=np.int16)
 
     stream.stop_stream()
     stream.close()
