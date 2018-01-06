@@ -7,6 +7,16 @@ import matplotlib.pyplot as plt
 
 
 def record_audio(outfname):
+    """
+    This function handles the recording the data gives a file name and returns a numpy array of the data
+    Params
+    ------
+    outfname: str, filename of the audio file
+
+    Return
+    ------
+    data: ndarray, returns numpy array with the raw ADC data from the mic
+    """
     CHUNK = 1024
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
@@ -35,7 +45,7 @@ def record_audio(outfname):
 
     print("* done recording")
 
-    data = np.fromstring(strdata,dtype=np.int16)
+    #data = np.fromstring(strdata,dtype=np.int16)
 
     stream.stop_stream()
     stream.close()
@@ -47,6 +57,7 @@ def record_audio(outfname):
     wf.setframerate(RATE)
     wf.writeframes(b''.join(frames))
     wf.close()
+    data = np.concatenate([np.fromstring(x,dtype=np.int16) for x in frames],axis=0)
     return data
 
 
