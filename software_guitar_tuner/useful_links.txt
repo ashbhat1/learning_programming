@@ -1,3 +1,9 @@
 http://docs.python-guide.org/en/latest/dev/virtualenvs/
 https://stackoverflow.com/questions/35344649/reading-input-sound-signal-using-python
+https://stackoverflow.com/questions/35970282/what-are-chunks-samples-and-frames-when-using-pyaudio
+https://people.csail.mit.edu/hubert/pyaudio/
 
+http://www.codesofinterest.com/2017/01/audio-classification-pyaudio-getting-started.html (has information on install pyaudio)
+
+https://docs.cycling74.com/max5/tutorials/msp-tut/mspdigitalaudio.html (good explanation of waves and how audio is recorded)
+https://dsp.stackexchange.com/questions/13728/what-are-chunks-when-recording-a-voice-signal (trying to explain chunks)
