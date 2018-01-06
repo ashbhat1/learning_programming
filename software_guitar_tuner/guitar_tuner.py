@@ -68,7 +68,7 @@ def calculate_fft(data,rate):
     return freqs,datafft
 
 def find_note_freq(freqs,datafft):
-    msk = freqs > 80
+    msk = freqs > 70
     maxamploc = np.where(datafft[msk]==np.max(datafft[msk]))[0]
     return freqs[msk][maxamploc[0]]
     
@@ -85,13 +85,14 @@ freqs2,datafft2 = calculate_fft(data2,rate2)
 note2 = find_note_freq(freqs2,datafft2)
 print("Frequency is: "+str(note2))
 plt.figure(1)
+plt.subplot(2,1,1)
 plt.plot(data1,'r');
 plt.plot(data2,'b');
 plt.title('data1 in red, data2 in blue')
-plt.figure(2)
+plt.subplot(2,1,2)
 plt.plot(freqs1,datafft1,'r');
 plt.plot(freqs2,datafft2,'b');
-
+plt.title('data1 in red, data2 in blue')
 plt.show()
     
 

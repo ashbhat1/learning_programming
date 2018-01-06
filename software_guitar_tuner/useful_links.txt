@@ -10,4 +10,18 @@ https://dsp.stackexchange.com/questions/13728/what-are-chunks-when-recording-a-v
 
 https://www.youtube.com/watch?v=zKKGA30bHG0 (great video about fft)
 
+https://stackoverflow.com/questions/1354084/real-time-pitch-detection (link about pitch detection)
+
+http://www.szynalski.com/tone-generator/ (tone generator)
+
+http://www.dspguide.com (great book on dsp)
+
+https://music.stackexchange.com/questions/5489/why-do-harmonics-happen (explains harmonics)
+
+https://stackoverflow.com/questions/5044289/how-to-find-the-fundamental-frequency-of-a-guitar-string-sound (how to find fundamental frequency of a guitar string sound)
+
+https://music.stackexchange.com/questions/6942/music-theory-frequencies-related-to-playing-a-note-on-guitar (frequencies related to playing a note on guitar)
+
+https://stackoverflow.com/questions/1354084/real-time-pitch-detection (real time pitch detection)
+
 
