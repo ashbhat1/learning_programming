@@ -24,4 +24,6 @@ https://music.stackexchange.com/questions/6942/music-theory-frequencies-related-
 
 https://stackoverflow.com/questions/1354084/real-time-pitch-detection (real time pitch detection)
 
+https://www.youtube.com/watch?v=OFIQwsodJrg (great explanation on sampling)
 
+http://qingkaikong.blogspot.com/2017/01/signal-processing-how-autocorrelation.html (great animation of autocorrelation)
