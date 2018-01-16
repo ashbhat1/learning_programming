@@ -27,3 +27,5 @@ https://stackoverflow.com/questions/1354084/real-time-pitch-detection (real time
 https://www.youtube.com/watch?v=OFIQwsodJrg (great explanation on sampling)
 
 http://qingkaikong.blogspot.com/2017/01/signal-processing-how-autocorrelation.html (great animation of autocorrelation)
+
+https://stackoverflow.com/questions/643699/how-can-i-use-numpy-correlate-to-do-autocorrelation (autocorrelation example)
