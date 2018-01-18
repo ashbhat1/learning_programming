@@ -29,3 +29,9 @@ https://www.youtube.com/watch?v=OFIQwsodJrg (great explanation on sampling)
 http://qingkaikong.blogspot.com/2017/01/signal-processing-how-autocorrelation.html (great animation of autocorrelation)
 
 https://stackoverflow.com/questions/643699/how-can-i-use-numpy-correlate-to-do-autocorrelation (autocorrelation example)
+
+https://betterexplained.com/articles/an-interactive-guide-to-the-fourier-transform/ (visualization of fourier transform)
+
+http://blog.revolutionanalytics.com/2014/01/the-fourier-transform-explained-in-one-sentence.html (fourier transform explanation)
+
+http://blog.revolutionanalytics.com/2015/09/because-its-friday-visualizing-ffts.html (visualizing fft)
