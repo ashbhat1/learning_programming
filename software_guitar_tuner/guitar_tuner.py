@@ -86,13 +86,13 @@ def calculate_autocorr(data,rate):
     norm = (fdata-np.mean(fdata))/np.std(fdata)
     corr = np.correlate(norm,norm,"full")
     result = corr[corr.size/2:] #seems like the data gets reflected (don't understand why)
-    plt.plot(result);plt.show()
+    #plt.plot(result);plt.show()
     corrdiff=np.diff(result) #take the diff to look for peaks and valleys
     pos=np.where(corrdiff>0)[0] #find only the positive slopes
     neg=np.where(corrdiff<0)[0] #find only the negative slopes
     posloc=np.intersect1d(pos,neg-1) #where do indexes align for diff when you slide neg location over by 1
     idx=np.arange(len(result))
-    plt.plot(idx,result,'b.');plt.plot(idx[posloc+1],result[posloc+1],'r.');plt.show() #plots the raw signal and where the peaks are found
+    #plt.plot(idx,result,'b.');plt.plot(idx[posloc+1],result[posloc+1],'r.');plt.show() #plots the raw signal and where the peaks are found
     maxamploc=posloc[np.where(result[posloc+1]==np.max(result[posloc+1]))[0]][0] #find the max amplitude location --> going to convert this to freq
     
     #lag = int(raw_input("Please enter value"));
@@ -100,17 +100,29 @@ def calculate_autocorr(data,rate):
     freq0 = 1/(maxamploc/float(len(fdata))*(t.max()))
     return freq0
 
+def hi_or_lo(delta_freqs,closest_note_loc):
+    if delta_freqs[closest_note_loc] > 1:
+        return 'low'
+    elif delta_freqs[closest_note_loc]<-1:
+        return 'high'
+    else:
+        return 'perfect'
+
 def find_closest_note(freqOI):
     open_guitar_string_freqs=np.array([329.63,246.94,196.0,146.83,110.0,82.41])
     open_guitar_string_notes=['E4','B3','G3','D3','A2','E2']
     delta_freqs = open_guitar_string_freqs-freqOI
     min_freq_delta = np.min(np.abs(delta_freqs))
-    closest_note = open_guitar_string_notes[np.where(min_freq_delta==np.abs(delta_freqs))[0][0]]
-    return closest_note
+    closest_note_loc = np.where(min_freq_delta==np.abs(delta_freqs))[0][0]
+    closest_note = open_guitar_string_notes[closest_note_loc]
+    tune_direction=hi_or_lo(delta_freqs,closest_note_loc)
+    return closest_note,tune_direction
+
 
 data=[];rate=[];
 freqs=[];datafft=[];
 note=[];freq=[];nearest_note=[];
+tune_direction=[];
 for idx in range(2):
     raw_input("HIT ENTER WHEN YOU WANT TO START THE NEXT RECORDING")
     print "recording "+str(idx)+" round"
@@ -122,20 +134,11 @@ for idx in range(2):
     note.append(tempnote)
     tempfreq = calculate_autocorr(data[idx],rate[idx])
     freq.append(tempfreq)
-    nearest_note.append(find_closest_note(freq[idx]))
+    temp_nearest_note,temp_tune_direction = find_closest_note(freq[idx])
+    nearest_note.append(temp_nearest_note)
+    tune_direction.append(temp_tune_direction)
     print("Frequency is (as calculated by fft): "+str(note[idx]))
     print("Frequency is (as calculated by autocorrelation): "+str(freq[idx]))
-    print("The nearest note is "+str(nearest_note))
-'''
-plt.figure(1)
-plt.subplot(2,1,1)
-plt.plot(data[0],'r');
-plt.plot(data[1],'b');
-plt.title('data1 in red, data2 in blue')
-plt.subplot(2,1,2)
-plt.plot(freqs[0],datafft[0],'r');
-plt.plot(freqs[1],datafft[1],'b');
-plt.title('data1 in red, data2 in blue')
-plt.show()
-''' 
+    print("The nearest note is "+str(nearest_note[idx]))
+    print("Your tuning is "+tune_direction[idx]);
 
