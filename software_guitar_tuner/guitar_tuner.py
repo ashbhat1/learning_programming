@@ -125,17 +125,5 @@ for idx in range(2):
     nearest_note.append(find_closest_note(freq[idx]))
     print("Frequency is (as calculated by fft): "+str(note[idx]))
     print("Frequency is (as calculated by autocorrelation): "+str(freq[idx]))
-    print("The nearest note is "+str(nearest_note))
-'''
-plt.figure(1)
-plt.subplot(2,1,1)
-plt.plot(data[0],'r');
-plt.plot(data[1],'b');
-plt.title('data1 in red, data2 in blue')
-plt.subplot(2,1,2)
-plt.plot(freqs[0],datafft[0],'r');
-plt.plot(freqs[1],datafft[1],'b');
-plt.title('data1 in red, data2 in blue')
-plt.show()
-''' 
+    print("The nearest note is "+str(nearest_note[idx]))
 
