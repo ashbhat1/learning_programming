@@ -5,6 +5,7 @@ import wave
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.fftpack
+import pdb
 
 def record_audio(outfname):
     """
@@ -78,6 +79,7 @@ def find_note_freq(freqs,datafft):
     return freqs[msk][maxamploc[0]]
 
 def calculate_autocorr(data,rate):
+    data2=data.copy();
     data=np.mean(rolling_window(data,7),-1)
     samp=float(rate)
     a=(1/samp)*len(data)
@@ -98,6 +100,7 @@ def calculate_autocorr(data,rate):
     #lag = int(raw_input("Please enter value"));
     #temp = 1/(lag/float(len(fdata))*(t.max()))
     freq0 = 1/(maxamploc/float(len(fdata))*(t.max()))
+    pdb.set_trace()
     return freq0
 
 def hi_or_lo(delta_freqs,closest_note_loc):
