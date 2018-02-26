@@ -59,6 +59,11 @@ def record_audio(outfname):
     data = np.concatenate([np.fromstring(x,dtype=np.int16) for x in frames],axis=0)
     return data,RATE
 
+def rolling_window(a,window):
+    shape = a.shape[:-1]+(a.shape[-1]-window+1,window);
+    strides = a.strides + (a.strides[-1],)
+    return np.lib.stride_tricks.as_strided(a,shape=shape,strides=strides)
+
 def calculate_fft(data,rate):
     N = len(data)
     sample_freq = 1.0/float(rate)
@@ -73,6 +78,7 @@ def find_note_freq(freqs,datafft):
     return freqs[msk][maxamploc[0]]
 
 def calculate_autocorr(data,rate):
+    data=np.mean(rolling_window(data,7),-1)
     samp=float(rate)
     a=(1/samp)*len(data)
     t=np.linspace(0,a,len(data))
@@ -93,32 +99,43 @@ def calculate_autocorr(data,rate):
     #temp = 1/(lag/float(len(fdata))*(t.max()))
     freq0 = 1/(maxamploc/float(len(fdata))*(t.max()))
     return freq0
-    
-raw_input("HIT ENTER WHEN YOU WANT TO START THE NEXT RECORDING")
-print "recording 1st round"
-data1,rate1 = record_audio('output.wav')
-freqs1,datafft1 = calculate_fft(data1,rate1)
-note1 = find_note_freq(freqs1,datafft1)
-freq0_1 = calculate_autocorr(data1,rate1)
-print("Frequency is (as calculated by fft): "+str(note1))
-print("Frequency is (as calculated by autocorrelation): "+str(freq0_1))
-raw_input('HIT ENTER WHEN YOU WANT TO START THE NEXT RECORDING')
-print "recording 2nd round"
-data2,rate2 = record_audio('output.wav')
-freqs2,datafft2 = calculate_fft(data2,rate2)
-note2 = find_note_freq(freqs2,datafft2)
-freq0_2 = calculate_autocorr(data2,rate2)
-print("Frequency is: "+str(note2))
-print("Frequency is (as calculated by autocorrelation): "+str(freq0_2))
+
+def find_closest_note(freqOI):
+    open_guitar_string_freqs=np.array([329.63,246.94,196.0,146.83,110.0,82.41])
+    open_guitar_string_notes=['E4','B3','G3','D3','A2','E2']
+    delta_freqs = open_guitar_string_freqs-freqOI
+    min_freq_delta = np.min(np.abs(delta_freqs))
+    closest_note = open_guitar_string_notes[np.where(min_freq_delta==np.abs(delta_freqs))[0][0]]
+    return closest_note
+
+data=[];rate=[];
+freqs=[];datafft=[];
+note=[];freq=[];nearest_note=[];
+for idx in range(2):
+    raw_input("HIT ENTER WHEN YOU WANT TO START THE NEXT RECORDING")
+    print "recording "+str(idx)+" round"
+    tempdata,temprate = record_audio('output.wav')
+    data.append(tempdata);rate.append(temprate)
+    tempfreqs,tempdatafft = calculate_fft(data[idx],rate[idx])
+    freqs.append(tempfreqs);datafft.append(tempdatafft)
+    tempnote = find_note_freq(freqs[idx],datafft[idx])
+    note.append(tempnote)
+    tempfreq = calculate_autocorr(data[idx],rate[idx])
+    freq.append(tempfreq)
+    nearest_note.append(find_closest_note(freq[idx]))
+    print("Frequency is (as calculated by fft): "+str(note[idx]))
+    print("Frequency is (as calculated by autocorrelation): "+str(freq[idx]))
+    print("The nearest note is "+str(nearest_note))
+'''
 plt.figure(1)
 plt.subplot(2,1,1)
-plt.plot(data1,'r');
-plt.plot(data2,'b');
+plt.plot(data[0],'r');
+plt.plot(data[1],'b');
 plt.title('data1 in red, data2 in blue')
 plt.subplot(2,1,2)
-plt.plot(freqs1,datafft1,'r');
-plt.plot(freqs2,datafft2,'b');
+plt.plot(freqs[0],datafft[0],'r');
+plt.plot(freqs[1],datafft[1],'b');
 plt.title('data1 in red, data2 in blue')
 plt.show()
-    
+''' 
 
