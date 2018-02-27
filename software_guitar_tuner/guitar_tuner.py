@@ -100,7 +100,6 @@ def calculate_autocorr(data,rate):
     #lag = int(raw_input("Please enter value"));
     #temp = 1/(lag/float(len(fdata))*(t.max()))
     freq0 = 1/(maxamploc/float(len(fdata))*(t.max()))
-    pdb.set_trace()
     return freq0
 
 def hi_or_lo(delta_freqs,closest_note_loc):
