@@ -76,6 +76,10 @@ int main() {
   /* Two channels (stereo) */
   snd_pcm_hw_params_set_channels(handle, params, 2);
 
+  /* explains frames and channels and such
+  https://www.alsa-project.org/main/index.php/FramesPeriods*/
+
+
   /* 44100 bits/second sampling rate (CD quality) */
   val = 44100;
   snd_pcm_hw_params_set_rate_near(handle, params,

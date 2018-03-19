@@ -50,3 +50,5 @@ http://equalarea.com/paul/alsa-audio.html (ALSA tutorial)
 http://www.linuxjournal.com/article/6735?page=0,1#N0x19ab2890.0x19ba78d8 (great article on alsa, good primer, but not very basic)
 
 https://stackoverflow.com/questions/27006249/wav-file-contents-what-does-those-byte-values-mean (a 0 value in wav file doesn't mean end of file, but the dac value is held at 0)
+
+https://www.alsa-project.org/main/index.php/FramesPeriods (good explanation of frames and all that jazz)
