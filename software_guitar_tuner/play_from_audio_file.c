@@ -111,6 +111,9 @@ int main() {
 
   int i=0;
   int idx=0;
+  /*can't use while loop and look for 0 char value because
+    it means a value of 0V for the output 
+    (https://stackoverflow.com/questions/27006249/wav-file-contents-what-does-those-byte-values-mean)*/
   for(idx=0;idx<fsize;idx+=size){
     //printf("0x%x\n",*audiofile);
     //audiofile++;
