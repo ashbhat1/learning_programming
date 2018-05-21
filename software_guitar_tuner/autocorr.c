@@ -3,13 +3,11 @@
 #include<string.h>
 #include<math.h>
 
-
 int getData(char *csvfpath,int **data); //https://stackoverflow.com/questions/34844003/changing-array-inside-function-in-c important as to why you need to pass the address the ptr, so it modifies whats inside the pointer
 float calc_mean(int *data,int arrlen);
 float calc_variance(int *data, int arrlen,float mean);
 float calc_autocorr(int *data, int arrlen, float mean, float var,int lag);
 int get_autocorr_vec(int *data, int arrlen, float mean, float var,float **autocorrvect);
-
 
 int main(){
   int *data;
@@ -30,7 +28,9 @@ int main(){
   for(idx=0;idx<vect_len;idx++){
     printf("%0.3f\n",autocorrvec[idx]);
   }
+
 }
+
 
 
 float calc_mean(int *data, int arrlen){
@@ -73,7 +73,7 @@ float calc_autocorr(int *data, int arrlen, float mean, float var,int lag){
 
 int get_autocorr_vec(int *data, int arrlen, float mean, float var,float **autocorrvec){
   int lag = 0;
-  int divider = 100;
+  int divider = 1;
   int vect_len = (int)(arrlen/divider);
   float *autocorr = malloc(sizeof(float)*vect_len);
   *autocorrvec=autocorr;
@@ -82,6 +82,8 @@ int get_autocorr_vec(int *data, int arrlen, float mean, float var,float **autoco
   }
   return vect_len;
 }
+
+
 
 int getData(char *csvfpath, int **data){
   int idx;
