@@ -54,3 +54,6 @@ https://stackoverflow.com/questions/27006249/wav-file-contents-what-does-those-b
 https://www.alsa-project.org/main/index.php/FramesPeriods (good explanation of frames and all that jazz)
 
 https://www.swharden.com/wp/2009-06-19-reading-pcm-audio-with-python/ (how to load in raw audiofile into numpy and plot it)
+
+
+https://stackoverflow.com/questions/65268/how-do-you-analyse-the-fundamental-frequency-of-a-pcm-or-wav-sample (great info on how to create tuners)
