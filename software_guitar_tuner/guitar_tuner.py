@@ -5,6 +5,7 @@ import wave
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.fftpack
+import scipy.io.wavfile
 
 def record_audio(outfname):
     """
@@ -78,7 +79,9 @@ def find_note_freq(freqs,datafft):
     return freqs[msk][maxamploc[0]]
 
 def calculate_autocorr(data,rate):
-    data=np.mean(rolling_window(data,7),-1)
+    print(len(data));
+    data=np.mean(rolling_window(data,8),-1)
+    print(len(data))
     samp=float(rate)
     a=(1/samp)*len(data)
     t=np.linspace(0,a,len(data))
@@ -86,15 +89,15 @@ def calculate_autocorr(data,rate):
     norm = (fdata-np.mean(fdata))/np.std(fdata)
     corr = np.correlate(norm,norm,"full")
     result = corr[corr.size/2:] #seems like the data gets reflected (don't understand why)
-    #plt.plot(result);plt.show()
+    plt.plot(result);plt.show()
     corrdiff=np.diff(result) #take the diff to look for peaks and valleys
     pos=np.where(corrdiff>0)[0] #find only the positive slopes
     neg=np.where(corrdiff<0)[0] #find only the negative slopes
     posloc=np.intersect1d(pos,neg-1) #where do indexes align for diff when you slide neg location over by 1
     idx=np.arange(len(result))
-    #plt.plot(idx,result,'b.');plt.plot(idx[posloc+1],result[posloc+1],'r.');plt.show() #plots the raw signal and where the peaks are found
+    plt.plot(idx,result,'b.');plt.plot(idx[posloc+1],result[posloc+1],'r.');plt.show() #plots the raw signal and where the peaks are found
     maxamploc=posloc[np.where(result[posloc+1]==np.max(result[posloc+1]))[0]][0] #find the max amplitude location --> going to convert this to freq
-    
+    print("maxamploc"+str(maxamploc))
     #lag = int(raw_input("Please enter value"));
     #temp = 1/(lag/float(len(fdata))*(t.max()))
     freq0 = 1/(maxamploc/float(len(fdata))*(t.max()))
@@ -123,10 +126,11 @@ data=[];rate=[];
 freqs=[];datafft=[];
 note=[];freq=[];nearest_note=[];
 tune_direction=[];
-for idx in range(2):
-    raw_input("HIT ENTER WHEN YOU WANT TO START THE NEXT RECORDING")
-    print "recording "+str(idx)+" round"
-    tempdata,temprate = record_audio('output.wav')
+for idx in range(1):
+    input("HIT ENTER WHEN YOU WANT TO START THE NEXT RECORDING")
+    print("recording "+str(idx)+" round")
+    temprate,tempdata = scipy.io.wavfile.read('output.wav')
+    #tempdata,temprate = record_audio('output.wav')
     data.append(tempdata);rate.append(temprate)
     tempfreqs,tempdatafft = calculate_fft(data[idx],rate[idx])
     freqs.append(tempfreqs);datafft.append(tempdatafft)

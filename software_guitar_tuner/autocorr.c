@@ -8,10 +8,16 @@ float calc_mean(int *data,int arrlen);
 float calc_variance(int *data, int arrlen,float mean);
 float calc_autocorr(int *data, int arrlen, float mean, float var,int lag);
 int get_autocorr_vec(int *data, int arrlen, float mean, float var,float **autocorrvect);
+void get_max_peak(float **autocorrvec,int vect_len);
+int rolling_mean(int *data,int **avgdata, int arrlen, int window);
 
 int main(){
   int *data;
-  int arrlen = getData("output2csv.csv",&data);  
+  int *rawdata;
+  int arrlen = getData("outputcsv.csv",&rawdata);  
+  printf("arrlen: %d\n",arrlen);
+  int *avgdata;
+  arrlen=rolling_mean(rawdata,&data,arrlen,8);
   printf("arrlen: %d\n",arrlen);
   int idx=0;
   //printing out contents of array
@@ -25,10 +31,50 @@ int main(){
   float *autocorrvec;
   int vect_len=get_autocorr_vec(data,arrlen,mean, var,&autocorrvec);
   int len=0;
-  for(idx=0;idx<vect_len;idx++){
+  /*for(idx=0;idx<vect_len;idx++){
     printf("%0.3f\n",autocorrvec[idx]);
-  }
+  }*/
+  //printf("\n%p\n",&autocorrvec);
+  get_max_peak(&autocorrvec,arrlen);
 
+}
+
+int rolling_mean(int *data,int **avgdata,int arrlen,int window){
+  int *avdata = malloc(sizeof(int)*arrlen-window);
+  *avgdata=avdata;
+  int i =0;int x = 0;
+  for(i=0;i<arrlen-1;i++){
+    for(x=0;x<window;x++){
+      avdata[i]=avdata[i]+data[i+x];}
+    avdata[i]=avdata[i]/window;
+    //printf("%d\n",avdata[i]);
+  }
+  int newlen=arrlen-window;
+  return newlen;
+}
+
+
+void get_max_peak(float **autocorrvec,int vect_len){
+  int i=0;
+  float max=0;
+  //float *vec = malloc(sizeof(float)*vect_len);
+  float *vec;
+  float prev,next;
+  int f0_loc=0;
+  vec=*autocorrvec;
+  for(i=1;i<vect_len/2-1;i++){
+    prev=vec[i]-vec[i-1];
+    next=vec[i+1]-vec[i];
+    if((prev > 0) & (next < 0) & (vec[i] > max)){
+      max=vec[i];
+      f0_loc=i;
+    }
+  }
+  float lambda =(float)1/44100;
+  printf("period: %0.10f\n",lambda);
+  //printf("F0 Loc: %d\n",f0_loc);
+  //printf("val: %0.3f\n",max);
+  printf("Frequency: %0.3f\n",1/((float)f0_loc*lambda));
 }
 
 

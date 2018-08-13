@@ -9,7 +9,7 @@ int main(){
   short *ptr;  
   size_t fsize, size_begin, size_end;
   FILE *fp, *csvfile;
-  fp = fopen("output2.raw","rb");
+  fp = fopen("output.raw","rb");
   printf("File pointer %p\n",fp);
   fseek(fp,0,SEEK_END);
   size_end = ftell(fp);
